@@ -1,33 +1,34 @@
-package com.fei.media05;
+package com.fei.media05
 
-import android.util.Log;
+import java.lang.ref.WeakReference
 
 /**
  * author : huangjf
  * date   : 2021/11/2921:58
  * desc   :
  */
-public class AudioEncoderThread extends Thread{
-
-    private static final String TAG = AudioEncoderThread.class.getSimpleName();
-    private volatile boolean mIsExit;
-    private final Object object = new Object();
-
-    @Override
-    public void run() {
-        while(!mIsExit) {
-
+class AudioEncoderThread(private val mReference: WeakReference<MediaMuxerThread>) : Thread() {
+    @Volatile
+    private var mIsExit = false
+    private val `object` = Any()
+    private fun init() {}
+    override fun run() {
+        while (!mIsExit) {
         }
-        Log.i("")
     }
 
     /**
      * 退出
      */
-    public void exit(){
-        mIsExit = true;
-
+    fun exit() {
+        mIsExit = true
     }
 
+    companion object {
+        private val TAG = AudioEncoderThread::class.java.simpleName
+    }
 
+    init {
+        init()
+    }
 }

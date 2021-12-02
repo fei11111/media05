@@ -1,24 +1,26 @@
-package com.fei.media05;
+package com.fei.media05
+
+import java.lang.ref.WeakReference
 
 /**
  * author : huangjf
  * date   : 2021/11/2921:59
  * desc   :
  */
-public class VideoEncoderThread extends Thread{
+class VideoEncoderThread(
+    width: Int,
+    height: Int,
+    weakReference: WeakReference<MediaMuxerThread>
+) : Thread() {
 
-    private volatile boolean mIsExit;
+    private val mIsExit = false
 
-    @Override
-    public void run() {
-        super.run();
+    override fun run() {
+        super.run()
     }
 
     /**
      * 退出
      */
-    public void exit(){
-
-    }
-
+    fun exit() {}
 }
