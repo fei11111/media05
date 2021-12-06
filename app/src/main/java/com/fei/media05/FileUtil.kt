@@ -19,8 +19,11 @@ object FileUtil {
 
     private val simpleFormat = SimpleDateFormat("yyyy_MM_dd_HH_mm")
     private var currentFileName = "-"
-    private var nextFile: String? = null
+    var nextFile: String? = null
 
+    /**
+     * 文件只录一分钟，一分钟后会切换文件
+     */
     fun requestSwapFile(): Boolean {
         return requestSwapFile(false)
     }
@@ -33,7 +36,6 @@ object FileUtil {
         }
         if (force || isChange) {
             nextFile = getSaveFile(fileName)
-            Log.i(TAG, "文件地址:$fileName")
             return true;
         }
         return false;

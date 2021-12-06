@@ -56,12 +56,12 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
         mStartStopBtn?.setOnClickListener(View.OnClickListener { v: View ->
             if (v.tag.toString().equals("stop", ignoreCase = true)) {
                 stopCamera()
-                mStartStopBtn?.setText("开始")
+                mStartStopBtn?.text = "开始"
                 v.tag = "start"
                 MediaMuxerThread.stopMuxer()
             } else {
                 startCamera()
-                mStartStopBtn?.setText("停止")
+                mStartStopBtn?.text = "停止"
                 v.tag = "stop"
                 MediaMuxerThread.startMuxer()
             }
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
                 val parameters = mCamera!!.getParameters()
                 parameters.previewFormat = ImageFormat.NV21
                 parameters.setPreviewSize(1920, 1080)
-                mCamera!!.setParameters(parameters)
+                mCamera!!.parameters = parameters
                 mCamera!!.setPreviewCallback(this)
                 mCamera!!.startPreview()
             } catch (e: IOException) {

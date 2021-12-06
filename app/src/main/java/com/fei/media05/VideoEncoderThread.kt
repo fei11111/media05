@@ -1,5 +1,6 @@
 package com.fei.media05
 
+import android.util.Log
 import java.lang.ref.WeakReference
 
 /**
@@ -12,8 +13,22 @@ class VideoEncoderThread(
     height: Int,
     weakReference: WeakReference<MediaMuxerThread>
 ) : Thread() {
+    private val `object` = java.lang.Object()
+    @Volatile
+    private var mIsExit = false
+    @Volatile
+    var mMuxerReady: Boolean? = null
+        set(value) {
+            synchronized(`object`) {
+                Log.i(TAG, "${Thread.currentThread().name} video -- setMuxerRead + $mMuxerReady")
+                mMuxerReady = value
+                `object`.notify()
+            }
+        }
 
-    private val mIsExit = false
+    companion object {
+        private val TAG = VideoEncoderThread.javaClass.simpleName
+    }
 
     override fun run() {
         super.run()
@@ -23,4 +38,12 @@ class VideoEncoderThread(
      * 退出
      */
     fun exit() {}
+
+    /**
+     * 重启
+     */
+    fun restart() {
+
+
+    }
 }

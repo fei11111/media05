@@ -1,5 +1,7 @@
+
 package com.fei.media05
 
+import android.util.Log
 import java.lang.ref.WeakReference
 
 /**
@@ -8,10 +10,26 @@ import java.lang.ref.WeakReference
  * desc   :
  */
 class AudioEncoderThread(private val mReference: WeakReference<MediaMuxerThread>) : Thread() {
+
+    private val `object` = java.lang.Object()
     @Volatile
     private var mIsExit = false
-    private val `object` = Any()
-    private fun init() {}
+    @Volatile
+    var mMuxerReady = false
+    set(value) {
+        synchronized(`object`) {
+            Log.i(TAG, "${Thread.currentThread().name} audio -- setMuxerRead + $mMuxerReady")
+            mMuxerReady = value
+            `object`.notify()
+        }
+    }
+
+
+    companion object {
+        private val TAG = AudioEncoderThread::class.java.simpleName
+    }
+
+
     override fun run() {
         while (!mIsExit) {
         }
@@ -24,11 +42,11 @@ class AudioEncoderThread(private val mReference: WeakReference<MediaMuxerThread>
         mIsExit = true
     }
 
-    companion object {
-        private val TAG = AudioEncoderThread::class.java.simpleName
+    /**
+     * 重启
+     */
+    fun restart() {
+
     }
 
-    init {
-        init()
-    }
 }
